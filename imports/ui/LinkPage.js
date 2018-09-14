@@ -1,17 +1,14 @@
 import React            from 'react';
-import { Accounts }     from 'meteor/accounts-base';
 import { Meteor }       from 'meteor/meteor';
 
 import browserHistory   from '../utils/History';
 
-import { Links }        from '../api/links';
 import LinksList        from './LinksList';
-
+import PrivateHeader    from './PrivateHeader';
+import AddLink          from './AddLink';
+import LinksListFilters from './LinksListFilters';
 
 export default class LinkPage extends React.Component {
-    onLogout() {
-        Accounts.logout();
-    }
 
     componentWillMount() {
         if (!Meteor.userId()) {
@@ -19,29 +16,13 @@ export default class LinkPage extends React.Component {
         }
     }
 
-    onSubmit(e) {
-        const url = this.refs.url.value.trim();
-
-        e.preventDefault();
-
-        if (url) {
-            Meteor.call('links.insert', url);
-            this.refs.url.value = '';
-        }
-    }
-
     render() {
         return (
             <div>
-                <h1>Your Links</h1>
-
-                <button onClick={this.onLogout.bind(this)} >Logout</button>
+                <PrivateHeader title="Your Links" />
+                <LinksListFilters />
+                <AddLink />
                 <LinksList />
-                <p>Add Link</p>
-                <form onSubmit={this.onSubmit.bind(this)} >
-                    <input type="text" ref="url" placeholder="URL" />
-                    <button>Add Link</button>
-                </form>
             </div>
         );
     }
