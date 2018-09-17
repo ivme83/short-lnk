@@ -20,9 +20,11 @@ export default class LinkPage extends React.Component {
         return (
             <div>
                 <PrivateHeader title="Your Links" />
-                <LinksListFilters />
-                <AddLink />
-                <LinksList />
+                <div className="page-content">
+                    <LinksListFilters />
+                    <AddLink />
+                    <LinksList />
+                </div>
             </div>
         );
     }
